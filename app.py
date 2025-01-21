@@ -8,8 +8,6 @@ def fetch_poster(movie_id):
     data = response.json()
     return 'http://image.tmdb.org/t/p/w500/' + data['poster_path']
 
-with open('similarity.pkl', 'rb') as f:
-    similarity = pickle.load(f)
 movie_dict= pickle.load(open('movie_dict.pkl','rb'))
 movies = pd.DataFrame(movie_dict)
 
@@ -30,7 +28,6 @@ def recommend(movie):
         recom_posters.append(fetch_poster((movies.iloc[i[0]].id)))
     return recom_movies , recom_posters
 
-
 if st.button("Recommend"):
     names, posters = recommend(selected_movie_name)
     col1, col2, col3, col4, col5 = st.columns(5)
@@ -39,3 +36,6 @@ if st.button("Recommend"):
         with cols[i]:
             st.image(posters[i])
             st.caption(names[i])
+with open('similarity.pkl', 'rb') as f:
+    similarity = pickle.load(f)
+
