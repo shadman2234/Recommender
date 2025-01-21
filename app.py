@@ -9,7 +9,7 @@ def fetch_poster(movie_id):
     data = response.json()
     return 'http://image.tmdb.org/t/p/w500/' + data['poster_path']
 
-
+similarity = pickle.load(open('similarity.pkl','rb'))
 movie_dict= pickle.load(open('movie_dict.pkl','rb'))
 movies = pd.DataFrame(movie_dict)
 
@@ -30,8 +30,6 @@ def recommend(movie):
         recom_posters.append(fetch_poster((movies.iloc[i[0]].id)))
     return recom_movies , recom_posters
 
-
-similarity = pickle.load(open('similarity.pkl','rb'))
 
 if st.button("Recommend"):
     names, posters = recommend(selected_movie_name)
