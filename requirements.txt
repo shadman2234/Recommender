@@ -1,3 +1,2 @@
 ﻿streamlit
 requests
-python 3.12
