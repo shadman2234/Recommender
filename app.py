@@ -1,6 +1,5 @@
 import streamlit as st
 st.title('Movie Recommender Champ')
-import streamlit as st
 import pandas as pd
 import pickle
 import requests
@@ -8,7 +7,6 @@ def fetch_poster(movie_id):
     response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?api_key=f6b7e70f7192c17572d5c95ccdcfa28a&language=en-US')
     data = response.json()
     return 'http://image.tmdb.org/t/p/w500/' + data['poster_path']
-
 
 movie_dict= pickle.load(open('movie_dict.pkl','rb'))
 movies = pd.DataFrame(movie_dict)
@@ -30,9 +28,6 @@ def recommend(movie):
         recom_posters.append(fetch_poster((movies.iloc[i[0]].id)))
     return recom_movies , recom_posters
 
-
-similarity = pickle.load(open('similarity.pkl','rb'))
-
 if st.button("Recommend"):
     names, posters = recommend(selected_movie_name)
     col1, col2, col3, col4, col5 = st.columns(5)
@@ -41,3 +36,6 @@ if st.button("Recommend"):
         with cols[i]:
             st.image(posters[i])
             st.caption(names[i])
+with open('similarity.pkl', 'rb') as f:
+    similarity = pickle.load(f)
+
