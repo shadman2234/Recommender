@@ -27,7 +27,8 @@ def recommend(movie):
         recom_movies.append((movies.iloc[i[0]].title))
         recom_posters.append(fetch_poster((movies.iloc[i[0]].id)))
     return recom_movies , recom_posters
-
+with open('sim.pkl', 'rb') as f:
+    similarity = pickle.load(f)
 if st.button("Recommend"):
     names, posters = recommend(selected_movie_name)
     col1, col2, col3, col4, col5 = st.columns(5)
@@ -36,6 +37,4 @@ if st.button("Recommend"):
         with cols[i]:
             st.image(posters[i])
             st.caption(names[i])
-with open('similarity.pkl', 'rb') as f:
-    similarity = pickle.load(f)
 
